@@ -1,0 +1,59 @@
+<?php namespace Tatter\Agents\Database\Migrations;
+
+use CodeIgniter\Database\Migration;
+
+class Migration_create_agents_tables extends Migration
+{
+	public function up()
+	{
+		// Probes
+		$fields = [
+			'name'           => ['type' => 'varchar', 'constraint' => 31],
+			'uid'            => ['type' => 'varchar', 'constraint' => 31],
+			'class'          => ['type' => 'varchar', 'constraint' => 63],
+			'icon'           => ['type' => 'varchar', 'constraint' => 31],
+			'summary'        => ['type' => 'varchar', 'constraint' => 255],
+			'created_at'     => ['type' => 'datetime', 'null' => true],
+			'updated_at'     => ['type' => 'datetime', 'null' => true],
+			'deleted_at'     => ['type' => 'datetime', 'null' => true],
+		];
+		
+		$this->forge->addField('id');
+		$this->forge->addField($fields);
+
+		$this->forge->addKey('name');
+		$this->forge->addKey('uid');
+		$this->forge->addKey(['deleted_at', 'id']);
+		$this->forge->addKey('created_at');
+		
+		$this->forge->createTable('agents');
+		
+		// Results
+		$fields = [
+			'agent_id'      => ['type' => 'int', 'unsigned' => true],
+			'metric'        => ['type' => 'varchar', 'constraint' => 63],
+			'format'        => ['type' => 'varchar', 'constraint' => 15],
+			'content'       => ['type' => 'text'],
+			'level'         => ['type' => 'int', 'null' => true],
+			'batch'         => ['type' => 'int', 'unsigned' => true],
+			'created_at'    => ['type' => 'datetime', 'null' => true],
+			'updated_at'    => ['type' => 'datetime', 'null' => true],
+		];
+		
+		$this->forge->addField('id');
+		$this->forge->addField($fields);
+
+		$this->forge->addKey(['agent_id', 'metric']);
+		$this->forge->addKey(['metric', 'agent_id']);
+		$this->forge->addKey(['batch', 'agent_id']);
+		$this->forge->addKey('created_at');
+		
+		$this->forge->createTable('agents_results');
+	}
+
+	public function down()
+	{
+		$this->forge->dropTable('agents');
+		$this->forge->dropTable('agents_results');
+	}
+}
