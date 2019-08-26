@@ -19,6 +19,7 @@ class FrameworkAgent extends BaseAgent implements AgentInterface
 	{
 		$this->record('version', 'string', Codeigniter::CI_VERSION);
 		$this->record('environment', 'string', ENVIRONMENT);
+		$this->record('baseUrl', 'string', base_url());
 		
 		// Paths
 		$paths = [];

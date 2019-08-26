@@ -23,7 +23,7 @@ class BaseAgent extends BaseHandler implements HandlerInterface
 		}
 		
 		// Serialize arrays
-		if ($format=='array' && is_array($content))
+		if (is_array($content))
 		{
 			$content = serialize($content);
 		}
@@ -32,7 +32,7 @@ class BaseAgent extends BaseHandler implements HandlerInterface
 			'agent_id' => $this->agentId,
 			'metric'   => $metric,
 			'format'   => $format,
-			'content'  => $content,
+			'content'  => $content ?? '',
 			'batch'    => $this->batch ?? $this->results->getBatch(),
 		];
 		
