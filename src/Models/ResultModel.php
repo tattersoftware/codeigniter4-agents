@@ -7,7 +7,7 @@ class ResultModel extends Model
 	protected $table      = 'agents_results';
 	protected $primaryKey = 'id';
 
-	protected $returnType = 'object';
+	protected $returnType = 'Tatter\Agents\Entities\Result';
 	protected $useSoftDeletes = false;
 
 	protected $allowedFields = ['agent_id', 'metric', 'format', 'content', 'hash', 'level', 'batch'];
