@@ -6,7 +6,7 @@ class Migration_create_agents_tables extends Migration
 {
 	public function up()
 	{
-		// Probes
+		// Agents
 		$fields = [
 			'name'           => ['type' => 'varchar', 'constraint' => 31],
 			'uid'            => ['type' => 'varchar', 'constraint' => 31],
@@ -33,7 +33,8 @@ class Migration_create_agents_tables extends Migration
 			'agent_id'      => ['type' => 'int', 'unsigned' => true],
 			'metric'        => ['type' => 'varchar', 'constraint' => 63],
 			'format'        => ['type' => 'varchar', 'constraint' => 15],
-			'content'       => ['type' => 'text'],
+			'hash'          => ['type' => 'varchar', 'constraint' => 32, 'null' => true],
+			'content'       => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
 			'level'         => ['type' => 'int', 'null' => true],
 			'batch'         => ['type' => 'int', 'unsigned' => true],
 			'created_at'    => ['type' => 'datetime', 'null' => true],
@@ -49,6 +50,18 @@ class Migration_create_agents_tables extends Migration
 		$this->forge->addKey('created_at');
 		
 		$this->forge->createTable('agents_results');
+		
+		// Hashes
+		$fields = [
+			'hash'          => ['type' => 'varchar', 'constraint' => 32],
+			'content'       => ['type' => 'text'],
+		];
+		
+		$this->forge->addField('id');
+		$this->forge->addField($fields);
+		$this->forge->addUniqueKey('hash');		
+
+		$this->forge->createTable('agents_hashes');
 	}
 
 	public function down()

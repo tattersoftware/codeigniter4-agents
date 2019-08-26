@@ -2,6 +2,7 @@
 
 use Tatter\Handlers\Handlers\BaseHandler;
 use Tatter\Handlers\Interfaces\HandlerInterface;
+use Tatter\Agents\Models\HashModel;
 use Tatter\Agents\Models\ResultModel;
 
 class BaseAgent extends BaseHandler implements HandlerInterface
@@ -34,6 +35,21 @@ class BaseAgent extends BaseHandler implements HandlerInterface
 			'content'  => $content,
 			'batch'    => $this->batch ?? $this->results->getBatch(),
 		];
+		
+		// If content exceeds 255 limit then hash and store it out
+		if (strlen($content) > 255)
+		{
+			$hashes = new HashModel();
+			$hash = md5($content);
+			$result['hash'] = $hash;
+			unset($result['content']);
+			
+			// Check for existing data with this hash
+			if (! $hashes->where('hash', $hash)->first())
+			{
+				$hashes->insert(['hash'=>$hash, 'content'=>$content]);
+			}
+		}
 		return $this->results->insert($result);
 	}
 }

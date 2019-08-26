@@ -10,7 +10,7 @@ class ResultModel extends Model
 	protected $returnType = 'object';
 	protected $useSoftDeletes = false;
 
-	protected $allowedFields = ['agent_id', 'metric', 'format', 'content', 'level', 'batch'];
+	protected $allowedFields = ['agent_id', 'metric', 'format', 'content', 'hash', 'level', 'batch'];
 
 	protected $useTimestamps = true;
 
