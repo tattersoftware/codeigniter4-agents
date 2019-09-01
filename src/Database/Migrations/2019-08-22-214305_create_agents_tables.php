@@ -2,7 +2,7 @@
 
 use CodeIgniter\Database\Migration;
 
-class Migration_create_agents_tables extends Migration
+class CreateAgentsTables extends Migration
 {
 	public function up()
 	{
@@ -30,13 +30,14 @@ class Migration_create_agents_tables extends Migration
 		
 		// Results
 		$fields = [
+			'server_id'     => ['type' => 'int', 'unsigned' => true, 'null' => true],
 			'agent_id'      => ['type' => 'int', 'unsigned' => true],
+			'batch'         => ['type' => 'int', 'unsigned' => true],
+			'level'         => ['type' => 'int', 'null' => true],
 			'metric'        => ['type' => 'varchar', 'constraint' => 63],
 			'format'        => ['type' => 'varchar', 'constraint' => 15],
 			'hash'          => ['type' => 'varchar', 'constraint' => 32, 'null' => true],
 			'content'       => ['type' => 'varchar', 'constraint' => 255, 'null' => true],
-			'level'         => ['type' => 'int', 'null' => true],
-			'batch'         => ['type' => 'int', 'unsigned' => true],
 			'created_at'    => ['type' => 'datetime', 'null' => true],
 			'updated_at'    => ['type' => 'datetime', 'null' => true],
 		];
@@ -68,5 +69,6 @@ class Migration_create_agents_tables extends Migration
 	{
 		$this->forge->dropTable('agents');
 		$this->forge->dropTable('agents_results');
+		$this->forge->dropTable('agents_hashes');
 	}
 }

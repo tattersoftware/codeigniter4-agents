@@ -10,7 +10,10 @@ class ResultModel extends Model
 	protected $returnType = 'Tatter\Agents\Entities\Result';
 	protected $useSoftDeletes = false;
 
-	protected $allowedFields = ['agent_id', 'metric', 'format', 'content', 'hash', 'level', 'batch'];
+	protected $allowedFields = [
+		'server_id', 'agent_id', 'level', 'batch',
+		'metric', 'format', 'content', 'hash',
+	];
 
 	protected $useTimestamps = true;
 

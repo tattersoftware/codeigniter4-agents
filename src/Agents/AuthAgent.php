@@ -28,7 +28,7 @@ class AuthAgent extends BaseAgent implements AgentInterface
 		if ($users)
 		{
 			$flag = true;
-			$ids = $users->findColumn('id');
+			$ids = $users->findColumn('id') ?? [];
 			$this->record('userCount', 'int', count($ids));
 			
 			// If there were users then fetch the most recent
@@ -52,7 +52,7 @@ class AuthAgent extends BaseAgent implements AgentInterface
 		if ($groups)
 		{
 			$flag = true;
-			$this->record('groups', 'array', $groups->findColumn('name'));
+			$this->record('groups', 'array', $groups->findColumn('name') ?? []);
 		}
 		
 		// If no models were discovered then commit suicide so as not to keep running
