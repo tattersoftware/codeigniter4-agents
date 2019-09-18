@@ -55,7 +55,7 @@ class CreateAgentsTables extends Migration
 		// Hashes
 		$fields = [
 			'hash'          => ['type' => 'varchar', 'constraint' => 32],
-			'content'       => ['type' => 'text'],
+			'content'       => ['type' => 'blob'],
 		];
 		
 		$this->forge->addField('id');

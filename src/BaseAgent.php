@@ -2,6 +2,7 @@
 
 use Tatter\Handlers\Handlers\BaseHandler;
 use Tatter\Handlers\Interfaces\HandlerInterface;
+use Tatter\Agents\Exceptions\AgentsException;
 use Tatter\Agents\Models\HashModel;
 use Tatter\Agents\Models\ResultModel;
 
@@ -26,6 +27,16 @@ class BaseAgent extends BaseHandler implements HandlerInterface
 		if (is_array($content))
 		{
 			$content = serialize($content);
+		}
+		
+		// Try to serialize objects
+		elseif (is_object($content))
+		{
+			$content = serialize($content);
+			if (empty($content))
+			{
+				throw AgentsException::forUnserializable(get_class($content));
+			}
 		}
 
 		$result = [
