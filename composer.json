@@ -22,7 +22,7 @@
 	],
 	"require": {
 		"php" : "^7.0",
-		"tatter/handlers": "^1.0",
+		"tatter/handlers": "^2.0",
 		"tatter/reports": "^1.0"
 	},
 	"require-dev": {
