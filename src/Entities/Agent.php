@@ -9,8 +9,8 @@ class Agent extends Entity
 	// Load the class and pass to the handler
 	public function check(...$args)
 	{
-		$class = $this->attributes['class'];
-		$handler = new $class();
+		$class            = $this->attributes['class'];
+		$handler          = new $class();
 		$handler->agentId = $this->attributes['id'];
 		
 		return $handler->check(...$args);

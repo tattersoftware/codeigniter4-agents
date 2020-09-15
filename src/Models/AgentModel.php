@@ -6,17 +6,43 @@ class AgentModel extends Model
 {
 	protected $table      = 'agents';
 	protected $primaryKey = 'id';
+	protected $returnType = 'object'; // afterFind converts to BaseAgent
 
-	protected $returnType = 'Tatter\Agents\Entities\Agent';
 	protected $useSoftDeletes = true;
+	protected $useTimestamps  = true;
+	protected $skipValidation = false;
 
 	protected $allowedFields = [
 		'name', 'uid', 'class', 'icon', 'summary',
 	];
 
-	protected $useTimestamps = true;
+	protected $afterFind = ['castAsAgent'];
 
-	protected $validationRules    = [];
-	protected $validationMessages = [];
-	protected $skipValidation     = false;
+	/**
+	 * Add this Agent to the database, if it does not exist.
+	 *
+	 * @param array $eventData
+	 *
+	 * @return bool  Whether this was a new registration
+	 */
+	protected function castAsAgent(array $eventData): bool
+	{
+		$result = [];
+		foreach ($eventData['data'] as $object)
+		{
+			// Get the BaseAgent instance
+			$agent = new $object->class();
+
+			// Add database-specific fields
+			foreach (['id', 'created_at', 'updated_at', 'deleted_at'] as $field)
+			{
+				$agent->$field = $object->$field;
+			}
+
+			$result[] = $agent;
+		}
+
+		$eventData['data'] = $result;
+		return $eventData;
+	}
 }

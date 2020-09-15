@@ -3,6 +3,7 @@
 use CodeIgniter\CLI\BaseCommand;
 use CodeIgniter\CLI\CLI;
 use Tatter\Agents\Models\AgentModel;
+use Tatter\Handlers\Handlers;
 
 class AgentsCheck extends BaseCommand
 {
@@ -12,20 +13,23 @@ class AgentsCheck extends BaseCommand
 
     public function run(array $params)
     {
-		$agents = new AgentModel();
+    	// Discover and register any new Agents
+    	(new Handlers('Agents'))->register();
+
+		// Run each Agent's check
 		$critical = 0;
-		foreach ($agents->findAll() as $agent)
+		foreach (model(AgentModel::class)->findAll() as $agent)
 		{
 			$critical += $agent->check();
 		}
-		
+
 		if ($critical==1)
 		{
-			CLI::write("WARNING: returned one critical error!", yellow);
+			CLI::write('WARNING: returned one critical error!', 'yellow');
 		}
 		elseif ($critical>1)
 		{
-			CLI::write("WARNING: returned {$critical} critical errors!", yellow);
+			CLI::write('WARNING: returned ' . $critical . ' critical errors!', 'yellow');
 		}
 	}
 }
