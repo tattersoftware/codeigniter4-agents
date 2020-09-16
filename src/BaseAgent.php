@@ -1,5 +1,6 @@
 <?php namespace Tatter\Agents;
 
+use CodeIgniter\Entity;
 use Tatter\Agents\Config\Agents;
 use Tatter\Agents\Exceptions\AgentsException;
 use Tatter\Agents\Models\AgentModel;

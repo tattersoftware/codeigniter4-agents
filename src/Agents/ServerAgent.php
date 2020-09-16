@@ -13,7 +13,7 @@ class ServerAgent extends BaseAgent implements AgentInterface
 		'summary'    => 'Load server information and configuration',
 	];
 	
-	public function check()
+	public function check(): void
 	{
 		// Get the hostname from $_SERVER
 		$request = service('request');
@@ -37,6 +37,5 @@ class ServerAgent extends BaseAgent implements AgentInterface
 		$this->record('streamWrappers', 'array', stream_get_wrappers());
 		$this->record('streamTransports', 'array', stream_get_transports());
 		$this->record('streamFilters', 'array', stream_get_filters());
-		
 	}
 }

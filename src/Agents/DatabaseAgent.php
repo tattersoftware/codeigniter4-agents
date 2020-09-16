@@ -19,7 +19,7 @@ class DatabaseAgent extends BaseAgent implements AgentInterface
 	protected $ignoredDatabases = ['information_schema'];
 	
 	// Check each database group for connectivity and various permissions
-	public function check()
+	public function check(): void
 	{
 		$critical = 0;
 		
@@ -87,6 +87,6 @@ class DatabaseAgent extends BaseAgent implements AgentInterface
 			$this->record('connections', 'int', 0, 'emergency');
 		}
 		
-		return $critical;
+		//return $critical;
 	}
 }

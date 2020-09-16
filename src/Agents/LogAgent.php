@@ -13,10 +13,10 @@ class LogAgent extends BaseAgent implements AgentInterface
 		'summary'    => 'Collect recent log excerpts',
 	];
 	
-	public function check($path = null)
+	public function check(): void
 	{
 		// Verify the path
-		$path = $path ?? WRITEPATH . 'logs/';
+		$path = WRITEPATH . 'logs/';
 		$this->record('path', 'string', $path);
 		
 		// Get all the files from the directory

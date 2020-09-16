@@ -14,7 +14,7 @@ class ComposerAgent extends BaseAgent implements AgentInterface
 	];
 	
 	// Check CodeIgniter framework and functionality
-	public function check()
+	public function check(): void
 	{
 		$installed = 0;
 		if (is_file(ROOTPATH . 'composer.json'))

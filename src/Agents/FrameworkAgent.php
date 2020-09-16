@@ -1,6 +1,6 @@
 <?php namespace Tatter\Agents\Agents;
 
-use Codeigniter\Codeigniter;
+use CodeIgniter\CodeIgniter;
 use Tatter\Agents\BaseAgent;
 use Tatter\Agents\Interfaces\AgentInterface;
 
@@ -15,9 +15,9 @@ class FrameworkAgent extends BaseAgent implements AgentInterface
 	];
 	
 	// Check CodeIgniter framework and functionality
-	public function check()
+	public function check(): void
 	{
-		$this->record('version', 'string', Codeigniter::CI_VERSION);
+		$this->record('version', 'string', CodeIgniter::CI_VERSION);
 		$this->record('environment', 'string', ENVIRONMENT);
 		$this->record('baseUrl', 'string', base_url());
 		
