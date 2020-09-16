@@ -7,7 +7,11 @@ use Tatter\Agents\Interfaces\AgentInterface;
 
 class DatabaseAgent extends BaseAgent implements AgentInterface
 {
-	// Attributes for Tatter\Handlers
+	/**
+	 * Attributes for Tatter\Handlers
+	 *
+	 * @var array<string, string>  Must include keys: name, uid, class, icon, summary
+	 */
 	public $attributes = [
 		'name'       => 'Database',
 		'uid'        => 'database',
@@ -17,8 +21,12 @@ class DatabaseAgent extends BaseAgent implements AgentInterface
 	
 	// Databases to ignore when recording
 	protected $ignoredDatabases = ['information_schema'];
-	
-	// Check each database group for connectivity and various permissions
+
+	/**
+	 * Checks each database group for connectivity and various permissions.
+	 *
+	 * @return void
+	 */
 	public function check(): void
 	{
 		$critical = 0;
@@ -53,7 +61,6 @@ class DatabaseAgent extends BaseAgent implements AgentInterface
 		
 		if (empty($groups))
 		{
-			$critical++;
 			$this->record('groups', 'No valid database groups configured', 'string', 'emergency');			
 		}
 		
@@ -64,7 +71,7 @@ class DatabaseAgent extends BaseAgent implements AgentInterface
 			try {
 				$db = \Config\Database::connect($group);
 			}
-			catch (\Exception $e)
+			catch (\Throwable $e)
 			{
 				$this->record("{$group}Connect", 'string', $e->getMessage(), 'error');
 				continue;
@@ -80,13 +87,13 @@ class DatabaseAgent extends BaseAgent implements AgentInterface
 		}
 		
 		// Make sure there was at least one connection
-		if ($connected) {
+		if ($connected)
+		{
 			$this->record('connections', 'int', $connected);
-		} else {
-			$critical++;
+		}
+		else
+		{
 			$this->record('connections', 'int', 0, 'emergency');
 		}
-		
-		//return $critical;
 	}
 }

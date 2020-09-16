@@ -5,26 +5,35 @@ use Tatter\Agents\Interfaces\AgentInterface;
 
 class ComposerAgent extends BaseAgent implements AgentInterface
 {
-	// Attributes for Tatter\Handlers
+	/**
+	 * Attributes for Tatter\Handlers
+	 *
+	 * @var array<string, string>  Must include keys: name, uid, class, icon, summary
+	 */
 	public $attributes = [
 		'name'       => 'Composer',
 		'uid'        => 'composer',
 		'icon'       => 'fas fa-box-open',
 		'summary'    => 'Harvest Composer states',
 	];
-	
-	// Check CodeIgniter framework and functionality
+
+	/**
+	 * Checks Composer packages and dependencies.
+	 *
+	 * @return void
+	 */
 	public function check(): void
 	{
 		$installed = 0;
 		if (is_file(ROOTPATH . 'composer.json'))
 		{
 			$installed = 1;
+
 			// Read in the entire composer.json
 			$composer = json_decode(file_get_contents(ROOTPATH . 'composer.json'), true);
 			$this->record('composer.json', 'array', $composer);
 		}
-		
+
 		// Check for composer.lock (for installed versions)
 		if (is_file(ROOTPATH . 'composer.lock'))
 		{

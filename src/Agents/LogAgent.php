@@ -5,14 +5,23 @@ use Tatter\Agents\Interfaces\AgentInterface;
 
 class LogAgent extends BaseAgent implements AgentInterface
 {
-	// Attributes for Tatter\Handlers
+	/**
+	 * Attributes for Tatter\Handlers
+	 *
+	 * @var array<string, string>  Must include keys: name, uid, class, icon, summary
+	 */
 	public $attributes = [
 		'name'       => 'Log',
 		'uid'        => 'log',
 		'icon'       => 'fas fa-clipboard',
 		'summary'    => 'Collect recent log excerpts',
 	];
-	
+
+	/**
+	 * Checks the latest log entries.
+	 *
+	 * @return void
+	 */
 	public function check(): void
 	{
 		// Verify the path
@@ -27,15 +36,20 @@ class LogAgent extends BaseAgent implements AgentInterface
 		// Get the newest file
 		rsort($files);
 		$file = reset($files);
+
 		if (empty($file))
+		{
 			return;
+		}
 		$this->record('file', 'string', $file);
-		
+
 		// Read the file in by lines and trim to the last 30
 		$content = file($path . $file);
 		$content = array_slice($content, -30);
 		if (empty($content))
-			return;		
+		{
+			return;
+		}
 		$this->record('recent', 'array', $content);
 	}
 }
