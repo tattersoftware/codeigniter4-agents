@@ -13,7 +13,11 @@ class AgentModel extends Model
 	protected $skipValidation = false;
 
 	protected $allowedFields = [
-		'name', 'uid', 'class', 'icon', 'summary',
+		'name',
+		'uid',
+		'class',
+		'icon',
+		'summary',
 	];
 
 	protected $afterFind = ['castAsAgent'];

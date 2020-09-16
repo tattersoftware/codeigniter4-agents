@@ -25,13 +25,13 @@ class AuthAgent extends BaseAgent
 	public function check(): void
 	{
 		$flag = false;
-		
+
 		// Check for a User model
 		if ($users = model('UserModel'))
 		{
 			$ids = $users->findColumn('id') ?? [];
 			$this->record('userCount', 'int', count($ids));
-			
+
 			// If there were users then fetch the most recent
 			if ($ids)
 			{
@@ -41,12 +41,12 @@ class AuthAgent extends BaseAgent
 				{
 					$user = $user->toArray();
 				}
-				$this->record('latestUser', 'array', $user);				
+				$this->record('latestUser', 'array', $user);
 			}
 
 			$flag = true;
 		}
-		
+
 		// Check for a Group model
 		$groups = model('GroupModel') ?? model('Myth\Auth\Authorization\GroupModel');
 		if ($groups)

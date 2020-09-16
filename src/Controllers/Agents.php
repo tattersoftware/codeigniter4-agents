@@ -25,33 +25,33 @@ class Agents extends Controller
 
 		return $this->dataHandler($agents);
 	}
-	
+
 	// Load any hashes since $timestamp
 	public function hashes($timestamp = 0)
 	{
 		$hashes = model(ResultModel::class)->builder()
 			->select('agents_hashes.hash, agents_hashes.content')
 			->distinct()
-            ->join('agents_hashes', 'agents_hashes.hash = agents_results.hash')
-            ->where('agents_results.created_at >=', date('Y-m-d H:i:s', $timestamp))
-            ->get()->getResultArray();
-        
+			->join('agents_hashes', 'agents_hashes.hash = agents_results.hash')
+			->where('agents_results.created_at >=', date('Y-m-d H:i:s', $timestamp))
+			->get()->getResultArray();
+
 		return $this->dataHandler($hashes);
 	}
-	
+
 	// Load any results since $timestamp
 	public function results($timestamp = 0)
 	{
 		$results = model(ResultModel::class)->builder()
 			->select('agents_results.*, agents.uid')
-            ->join('agents', 'agents.id = agents_results.agent_id')
-            ->where('agents_results.created_at >=', date('Y-m-d H:i:s', $timestamp))
-            ->orderBy('created_at', 'asc')
-            ->get()->getResultArray();
-        
+			->join('agents', 'agents.id = agents_results.agent_id')
+			->where('agents_results.created_at >=', date('Y-m-d H:i:s', $timestamp))
+			->orderBy('created_at', 'asc')
+			->get()->getResultArray();
+
 		return $this->dataHandler($results);
 	}
-	
+
 	protected function dataHandler($array)
 	{
 		$this->response->setHeader('Cache-Control', 'no-cache');

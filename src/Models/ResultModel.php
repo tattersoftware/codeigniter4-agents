@@ -13,14 +13,20 @@ class ResultModel extends Model
 	protected $skipValidation = true;
 
 	protected $allowedFields = [
-		'server_id', 'agent_id', 'level', 'batch',
-		'metric', 'format', 'content', 'hash',
+		'server_id',
+		'agent_id',
+		'level',
+		'batch',
+		'metric',
+		'format',
+		'content',
+		'hash',
 	];
 
 	/**
 	 * The latest batch of results processed.
 	 *
-	 * @var int|null
+	 * @var integer|null
 	 */
 	public static $batch;
 
@@ -44,7 +50,7 @@ class ResultModel extends Model
 	/**
 	 * Returns the number ID for the next batch.
 	 *
-	 * @return int
+	 * @return integer
 	 */
 	public function getBatch()
 	{

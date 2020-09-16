@@ -7,10 +7,13 @@ class HashModel extends Model
 	protected $table      = 'agents_hashes';
 	protected $primaryKey = 'id';
 
-	protected $returnType = 'object';
+	protected $returnType     = 'object';
 	protected $useSoftDeletes = false;
 
-	protected $allowedFields = ['hash', 'content'];
+	protected $allowedFields = [
+		'hash',
+		'content',
+	];
 
 	protected $useTimestamps = false;
 

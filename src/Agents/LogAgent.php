@@ -11,10 +11,10 @@ class LogAgent extends BaseAgent implements AgentInterface
 	 * @var array<string, string>  Must include keys: name, uid, class, icon, summary
 	 */
 	public $attributes = [
-		'name'       => 'Log',
-		'uid'        => 'log',
-		'icon'       => 'fas fa-clipboard',
-		'summary'    => 'Collect recent log excerpts',
+		'name'    => 'Log',
+		'uid'     => 'log',
+		'icon'    => 'fas fa-clipboard',
+		'summary' => 'Collect recent log excerpts',
 	];
 
 	/**
@@ -27,12 +27,12 @@ class LogAgent extends BaseAgent implements AgentInterface
 		// Verify the path
 		$path = WRITEPATH . 'logs/';
 		$this->record('path', 'string', $path);
-		
+
 		// Get all the files from the directory
 		helper('filesystem');
 		$files = get_filenames($path);
 		$this->record('count', 'int', count($files));
-		
+
 		// Get the newest file
 		rsort($files);
 		$file = reset($files);

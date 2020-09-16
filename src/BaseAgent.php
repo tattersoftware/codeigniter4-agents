@@ -27,7 +27,7 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 	/**
 	 * Overriding value to use for the result batch
 	 *
-	 * @var int|null
+	 * @var integer|null
 	 */
 	protected $batch;
 
@@ -51,7 +51,7 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 	/**
 	 * Sets an overriding batch ID to use.
 	 *
-	 * @param int|null $batch
+	 * @param integer|null $batch
 	 *
 	 * @return $this
 	 */
@@ -65,7 +65,7 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 	/**
 	 * Add this Agent to the database, if it does not exist.
 	 *
-	 * @return bool  Whether this was a new registration
+	 * @return boolean  Whether this was a new registration
 	 */
 	public function register(): bool
 	{
@@ -85,10 +85,10 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 	/**
 	 * Creates a single result record.
 	 *
-	 * @param string $metric
-	 * @param string $format
-	 * @param mixed $content
-	 * @param string|int|null $level
+	 * @param string              $metric
+	 * @param string              $format
+	 * @param mixed               $content
+	 * @param string|integer|null $level
 	 */
 	protected function record(string $metric, string $format, $content, $level = null)
 	{
@@ -97,7 +97,7 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 		{
 			$level = model(ResultModel::class)::$levels[$level];
 		}
-		
+
 		// Serialize arrays
 		if (is_array($content) || is_object($content))
 		{
@@ -120,7 +120,7 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 			'content'  => $content ?? '',
 			'batch'    => $this->batch ?? model(ResultModel::class)->getBatch(),
 		];
-		
+
 		// If content exceeds 255 limit then hash and store it out
 		if (strlen($content) > 255)
 		{
@@ -134,8 +134,8 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 			if (! $hashes->where('hash', $hash)->first())
 			{
 				$hashes->insert([
-					'hash'    =>$hash,
-					'content' =>$content
+					'hash'    => $hash,
+					'content' => $content,
 				]);
 			}
 		}
