@@ -23,9 +23,9 @@ class AgentModel extends Model
 	 *
 	 * @param array $eventData
 	 *
-	 * @return bool  Whether this was a new registration
+	 * @return array  $eventData but the 'data' array replaced with actual Agents
 	 */
-	protected function castAsAgent(array $eventData): bool
+	protected function castAsAgent(array $eventData): array
 	{
 		$result = [];
 		foreach ($eventData['data'] as $object)

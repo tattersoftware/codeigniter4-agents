@@ -7,22 +7,12 @@ use Tatter\Agents\Models\ResultModel;
 
 class Agents extends Controller
 {
-	public function __construct()
-	{
-		// Preload the models & config
-		$this->agents  = new AgentModel();
-		$this->hashes  = new HashModel();
-		$this->results = new ResultModel();
-		
-		$this->config  = config('Agents');
-	}
-	
 	// Get all active agents for this instance
 	public function agents()
 	{
 		// Get all agents
 		$agents = [];
-		foreach ($this->agents->findAll() as $agent)
+		foreach (model(AgentModel::class)->findAll() as $agent)
 		{
 			$agents[] = [
 				'name'    => $agent->name,
@@ -39,7 +29,7 @@ class Agents extends Controller
 	// Load any hashes since $timestamp
 	public function hashes($timestamp = 0)
 	{
-		$hashes = $this->results->builder()
+		$hashes = model(ResultModel::class)->builder()
 			->select('agents_hashes.hash, agents_hashes.content')
 			->distinct()
             ->join('agents_hashes', 'agents_hashes.hash = agents_results.hash')
@@ -52,7 +42,7 @@ class Agents extends Controller
 	// Load any results since $timestamp
 	public function results($timestamp = 0)
 	{
-		$results = $this->results->builder()
+		$results = model(ResultModel::class)->builder()
 			->select('agents_results.*, agents.uid')
             ->join('agents', 'agents.id = agents_results.agent_id')
             ->where('agents_results.created_at >=', date('Y-m-d H:i:s', $timestamp))
@@ -66,6 +56,7 @@ class Agents extends Controller
 	{
 		$this->response->setHeader('Cache-Control', 'no-cache');
 		$this->response->setHeader('Content-Type', 'application/json');
+
 		return json_encode($array);
 	}
 }
