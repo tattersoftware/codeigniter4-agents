@@ -27,7 +27,7 @@ class FrameworkAgent extends BaseAgent
 		$this->record('version', 'string', CodeIgniter::CI_VERSION);
 		$this->record('environment', 'string', ENVIRONMENT);
 		$this->record('baseUrl', 'string', base_url());
-		
+
 		// Paths
 		$paths = [];
 		foreach (config('Paths') as $type => $path)
@@ -35,7 +35,7 @@ class FrameworkAgent extends BaseAgent
 			$paths[$type] = realpath($path);
 		}
 		$this->record('paths', 'array', $paths);
-		
+
 		// Try to determine installation source
 		$source = '';
 		if (is_file(ROOTPATH . 'composer.json'))
@@ -48,12 +48,12 @@ class FrameworkAgent extends BaseAgent
 				foreach ($composer['require'] as $name => $version)
 				{
 					// Check for AppStarter and DevStarter
-					if ($name == 'codeigniter4/codeigniter4' && $version == 'dev-develop')
+					if ($name === 'codeigniter4/codeigniter4' && $version === 'dev-develop')
 					{
 						$source = 'DevStarter';
 						break;
 					}
-					elseif ($name == 'codeigniter4/framework')
+					elseif ($name === 'codeigniter4/framework')
 					{
 						$source = 'AppStarter';
 						break;

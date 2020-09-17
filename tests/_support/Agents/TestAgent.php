@@ -10,10 +10,10 @@ class TestAgent extends BaseAgent
 	 * @var array<string, string>  Must include keys: name, uid, class, icon, summary
 	 */
 	public $attributes = [
-		'name'       => 'Test Agent',
-		'uid'        => 'test',
-		'icon'       => 'fas fa-flask',
-		'summary'    => 'Agent for testing',
+		'name'    => 'Test Agent',
+		'uid'     => 'test',
+		'icon'    => 'fas fa-flask',
+		'summary' => 'Agent for testing',
 	];
 
 	/**
