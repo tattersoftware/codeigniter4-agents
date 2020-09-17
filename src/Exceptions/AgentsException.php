@@ -9,7 +9,7 @@ class AgentsException extends \RuntimeException implements ExceptionInterface
 	{
 		return new static(lang('Agents.noHandlers'));
 	}
-	
+
 	public static function forUnserializable($class)
 	{
 		return new static(lang('Agents.unserializable', [$class]));

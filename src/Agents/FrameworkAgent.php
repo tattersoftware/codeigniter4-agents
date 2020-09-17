@@ -1,32 +1,41 @@
 <?php namespace Tatter\Agents\Agents;
 
-use Codeigniter\Codeigniter;
+use CodeIgniter\CodeIgniter;
 use Tatter\Agents\BaseAgent;
-use Tatter\Agents\Interfaces\AgentInterface;
 
-class FrameworkAgent extends BaseAgent implements AgentInterface
+class FrameworkAgent extends BaseAgent
 {
-	// Attributes for Tatter\Handlers
+	/**
+	 * Attributes for Tatter\Handlers
+	 *
+	 * @var array<string, string>  Must include keys: name, uid, class, icon, summary
+	 */
 	public $attributes = [
-		'name'       => 'Framework',
-		'uid'        => 'framework',
-		'icon'       => 'fas fa-fire',
-		'summary'    => 'Assess CodeIgniter version and state',
+		'name'    => 'Framework',
+		'uid'     => 'framework',
+		'icon'    => 'fas fa-fire',
+		'summary' => 'Assess CodeIgniter version and state',
 	];
-	
-	// Check CodeIgniter framework and functionality
-	public function check()
+
+	/**
+	 * Checks CodeIgniter framework and functionality.
+	 *
+	 * @return void
+	 */
+	public function check(): void
 	{
-		$this->record('version', 'string', Codeigniter::CI_VERSION);
+		$this->record('version', 'string', CodeIgniter::CI_VERSION);
 		$this->record('environment', 'string', ENVIRONMENT);
 		$this->record('baseUrl', 'string', base_url());
-		
+
 		// Paths
 		$paths = [];
 		foreach (config('Paths') as $type => $path)
+		{
 			$paths[$type] = realpath($path);
+		}
 		$this->record('paths', 'array', $paths);
-		
+
 		// Try to determine installation source
 		$source = '';
 		if (is_file(ROOTPATH . 'composer.json'))
@@ -39,12 +48,12 @@ class FrameworkAgent extends BaseAgent implements AgentInterface
 				foreach ($composer['require'] as $name => $version)
 				{
 					// Check for AppStarter and DevStarter
-					if ($name=='codeigniter4/codeigniter4' && $version=='dev-develop')
+					if ($name === 'codeigniter4/codeigniter4' && $version === 'dev-develop')
 					{
 						$source = 'DevStarter';
 						break;
 					}
-					elseif ($name=='codeigniter4/framework')
+					elseif ($name === 'codeigniter4/framework')
 					{
 						$source = 'AppStarter';
 						break;
@@ -57,6 +66,7 @@ class FrameworkAgent extends BaseAgent implements AgentInterface
 				}
 			}
 		}
+
 		$this->record('installation', 'string', $source ?: 'download');
 	}
 }
