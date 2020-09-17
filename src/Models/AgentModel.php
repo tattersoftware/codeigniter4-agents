@@ -1,12 +1,13 @@
 <?php namespace Tatter\Agents\Models;
 
 use CodeIgniter\Model;
+use Tatter\Agents\BaseAgent;
 
 class AgentModel extends Model
 {
 	protected $table      = 'agents';
 	protected $primaryKey = 'id';
-	protected $returnType = 'object'; // afterFind converts to BaseAgent
+	protected $returnType = 'array'; // afterFind converts to BaseAgent
 
 	protected $useSoftDeletes = true;
 	protected $useTimestamps  = true;
@@ -20,33 +21,50 @@ class AgentModel extends Model
 		'summary',
 	];
 
-	protected $afterFind = ['castAsAgent'];
+	protected $afterFind = ['convertToAgents'];
 
 	/**
-	 * Add this Agent to the database, if it does not exist.
+	 * Converts a database row to its Agent equivalent.
+	 *
+	 * @param array $row
+	 *
+	 * @return BaseAgent
+	 */
+	public function castAsAgent(array $row): ?BaseAgent
+	{
+		if (empty($row['class']))
+		{
+			return null;
+		}
+
+		// Get the BaseAgent instance
+		$agent = new $row['class']();
+
+		// Add database-specific fields
+		foreach (['id', 'created_at', 'updated_at', 'deleted_at'] as $field)
+		{
+			$agent->$field = $row[$field];
+		}
+
+		return $agent;
+	}
+
+	/**
+	 * Converts find* results to Agents. Triggered by `afterFind`
 	 *
 	 * @param array $eventData
 	 *
-	 * @return array  $eventData but the 'data' array replaced with actual Agents
+	 * @return array  $eventData but the 'data' array replaced with Agents
 	 */
-	protected function castAsAgent(array $eventData): array
+	protected function convertToAgents(array $eventData): array
 	{
-		$result = [];
-		foreach ($eventData['data'] as $object)
+		if (! empty($eventData['data']))
 		{
-			// Get the BaseAgent instance
-			$agent = new $object->class();
-
-			// Add database-specific fields
-			foreach (['id', 'created_at', 'updated_at', 'deleted_at'] as $field)
-			{
-				$agent->$field = $object->$field;
-			}
-
-			$result[] = $agent;
+			$eventData['data'] = $eventData['singleton']
+				? $this->castAsAgent($eventData['data'])
+				: array_map([$this, 'castAsAgent'], $eventData['data']);
 		}
 
-		$eventData['data'] = $result;
 		return $eventData;
 	}
 }

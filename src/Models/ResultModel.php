@@ -13,14 +13,8 @@ class ResultModel extends Model
 	protected $skipValidation = true;
 
 	protected $allowedFields = [
-		'server_id',
-		'agent_id',
-		'level',
-		'batch',
-		'metric',
-		'format',
-		'content',
-		'hash',
+		'server_id', 'agent_id', 'level', 'batch',
+		'metric', 'format', 'content', 'hash',
 	];
 
 	/**

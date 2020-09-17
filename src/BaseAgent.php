@@ -1,7 +1,6 @@
 <?php namespace Tatter\Agents;
 
 use CodeIgniter\Entity;
-use Tatter\Agents\Config\Agents;
 use Tatter\Agents\Exceptions\AgentsException;
 use Tatter\Agents\Models\AgentModel;
 use Tatter\Agents\Models\HashModel;
@@ -18,28 +17,11 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 	protected $attributes;
 
 	/**
-	 * An instance of the configuration.
-	 *
-	 * @var Agents
-	 */
-	protected $config;
-
-	/**
 	 * Overriding value to use for the result batch
 	 *
 	 * @var integer|null
 	 */
 	protected $batch;
-
-	/**
-	 * Initializes the class.
-	 *
-	 * @param Agents|null $config
-	 */
-	public function __construct(Agents $config = null)
-	{
-		$this->config = $config ?? config('Agents');
-	}
 
 	/**
 	 * Runs this Agent's status check. Usually in turn calls record().
