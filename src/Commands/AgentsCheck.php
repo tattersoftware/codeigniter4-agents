@@ -8,7 +8,7 @@ use Tatter\Handlers\Handlers;
 
 class AgentsCheck extends BaseCommand
 {
-	protected $group       = 'Agents';
+	protected $group       = 'Tasks';
 	protected $name        = 'agents:check';
 	protected $description = 'Pull and assess status from all detected agents.';
 
