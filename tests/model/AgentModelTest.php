@@ -16,7 +16,7 @@ class AgentModelTest extends AgentsTestCase
 
 	public function testCastAsAgent()
 	{
-		$rows   = $this->agents->builder()->get()->getResultArray(); // @phpstan-ignore-line
+		$rows   = $this->agents->builder()->get()->getResultArray();
 		$result = $this->agents->castAsAgent($rows[0]);
 
 		$this->assertInstanceOf(BaseAgent::class, $result);

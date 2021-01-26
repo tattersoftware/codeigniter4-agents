@@ -11,7 +11,7 @@ class BaseAgentTest extends AgentsTestCase
 		$agent = new TestAgent();
 		$agent->register();
 
-		$result = $this->agents->builder()->get()->getResult(); // @phpstan-ignore-line
+		$result = $this->agents->builder()->get()->getResult();
 
 		$this->assertCount(1, $result);
 	}
