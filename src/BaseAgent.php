@@ -28,7 +28,7 @@ abstract class BaseAgent extends Entity implements HandlerInterface
 	 *
 	 * @return void
 	 */
-	abstract protected function check(): void;
+	abstract public function check(): void;
 
 	/**
 	 * Sets an overriding batch ID to use.

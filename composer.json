@@ -22,13 +22,13 @@
 		}
 	],
 	"require": {
-		"php": "^7.3|^8.0",
+		"php": "^7.3 || ^8.0",
 		"tatter/handlers": "^2.0",
 		"tatter/reports": "^1.1"
 	},
 	"require-dev": {
 		"codeigniter4/codeigniter4": "dev-develop",
-		"tatter/tools": "^1.4"
+		"tatter/tools": "^1.5"
 	},
 	"autoload": {
 		"psr-4": {
