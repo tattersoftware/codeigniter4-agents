@@ -5,16 +5,19 @@ parameters:
 		- src
 		- tests
 	bootstrapFiles:
-		- phpstan-bootstrap.php
+		- vendor/codeigniter4/codeigniter4/system/Test/bootstrap.php
 	excludes_analyse:
 		- src/Config/Routes.php
 		- src/Views/*
 	ignoreErrors:
 		- '#Cannot access property [\$a-z_]+ on (array|object)#'
 		- '#Unsafe usage of new static\(\)*#'
+	universalObjectCratesClasses:
+		- CodeIgniter\Entity
+		- Faker\Generator
 	scanDirectories:
 		- vendor/codeigniter4/codeigniter4/system/Helpers
 	dynamicConstantNames:
-		- ENVIRONMENT
-		- CI_DEBUG
 		- APP_NAMESPACE
+		- CI_DEBUG
+		- ENVIRONMENT
